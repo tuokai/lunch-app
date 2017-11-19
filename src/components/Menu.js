@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MenuHeader from './MenuHeader';
+import CourseList from './CourseList';
 
 const Menu = ({ isFetching, isError, data }) => {
+  const courses = data.courses || [];
   const meta = data.meta;
   const url = meta && meta.ref_url;
   let title;
@@ -18,6 +20,7 @@ const Menu = ({ isFetching, isError, data }) => {
   return (
     <div>
       <MenuHeader title={title} url={url} />
+      <CourseList>{courses}</CourseList>
     </div>
   )
 };
