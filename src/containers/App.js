@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchMenuIfNeeded } from '../actions';
 import './App.css';
+import MenuList from '../components/MenuList';
 
 class App extends Component {
 
@@ -17,13 +18,14 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Lunch App</h1>
         </header>
+        <MenuList>{this.props.menus}</MenuList>
       </div>
     );
   }
 }
 
 App.propTypes = {
-  selectedRestaurants: PropTypes.array.isRequired,
+  selectedRestaurants: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   menus: PropTypes.array.isRequired
 };
 
