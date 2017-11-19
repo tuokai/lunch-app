@@ -1,8 +1,9 @@
 import React from 'react';
 import Menu from './Menu';
+import './MenuList.css';
 
 const MenuList = ({ children }) => (
-  <div>
+  <div className="MenuList">
     { children.map((menu, i) => (
       <Menu
         key={i}

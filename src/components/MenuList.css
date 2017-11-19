@@ -1,0 +1,6 @@
+.MenuList {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 50em;
+}

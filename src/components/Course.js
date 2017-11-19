@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './Course.css';
 
 const Course = ({ title, category, properties, price }) => (
-  <div>
-    <div>{category}</div>
-    <div>{title}</div>
-    <div>{price}</div>
-    <div>{properties}</div>
+  <div className="Course">
+    <div className="Category">{category}</div>
+    <div className="Title">{title}</div>
+    <div className="PriceProperties">
+      <div className="Price">{price}</div>
+      <div className="Properties">{properties}</div>
+    </div>
   </div>
 );
 

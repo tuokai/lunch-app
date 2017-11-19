@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './MenuHeader.css';
 
 const MenuHeader = ({ title, url }) => (
-  <div>
+  <div className="MenuHeader">
     <a href={url}>{title}</a>
   </div>
 );
