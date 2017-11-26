@@ -16,6 +16,10 @@ function selectedRestaurants(state = defaultRestaurantSelection, action) {
   return state;
 }
 
+function selectedDate(state = new Date(), action) {
+  return state;
+}
+
 function menu(
   state = {
     isFetching: false,
@@ -66,6 +70,7 @@ function menusByRestaurantId(state = {}, action) {
 
 const rootReducer = combineReducers({
   selectedRestaurants,
+  selectedDate,
   menusByRestaurantId
 });
 

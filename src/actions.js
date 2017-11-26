@@ -4,10 +4,11 @@ export const FETCH_MENU_REQUEST = 'FETCH_MENU_REQUEST';
 export const FETCH_MENU_SUCCESS = 'FETCH_MENU_SUCCESS';
 export const FETCH_MENU_FAILURE = 'FETCH_MENU_FAILURE';
 
-function fetchMenuRequest(restaurantId) {
+function fetchMenuRequest(restaurantId, date) {
   return {
     type: FETCH_MENU_REQUEST,
-    restaurantId
+    restaurantId,
+    date
   };
 }
 
@@ -38,10 +39,10 @@ function dailyMenuUrl(restaurantId, date = new Date(), language = 'fi') {
   return `${dailyMenuBaseUrl}/${restaurantId}/${year}/${month}/${day}/${language}`;
 }
 
-function fetchMenu(restaurantId) {
+function fetchMenu(restaurantId, date) {
   return dispatch => {
     dispatch(fetchMenuRequest(restaurantId));
-    return fetch(dailyMenuUrl(restaurantId))
+    return fetch(dailyMenuUrl(restaurantId, date))
       .then(response => response.json())
       .then(
         json => dispatch(fetchMenuSuccess(restaurantId, json)),
@@ -55,10 +56,10 @@ function shouldFetchMenu(state, restaurantId) {
   return !menu;
 }
 
-export function fetchMenuIfNeeded(restaurantId) {
+export function fetchMenuIfNeeded(restaurantId, date) {
   return (dispatch, getState) => {
     if (shouldFetchMenu(getState(), restaurantId)) {
-      return dispatch(fetchMenu(restaurantId));
+      return dispatch(fetchMenu(restaurantId, date));
     }
   };
 }
