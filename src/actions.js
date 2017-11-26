@@ -33,7 +33,7 @@ function dailyMenuUrl(restaurantId, date = new Date(), language = 'fi') {
   const month = date.getMonth() + 1;
   const day = date.getDate();
 
-  return `${dailyMenuBaseUrl}/${restaurantId}/${year}/${month}/${day}/{language}`;
+  return `${dailyMenuBaseUrl}/${restaurantId}/${year}/${month}/${day}/${language}`;
 }
 
 function fetchMenu(restaurantId) {
