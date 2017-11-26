@@ -26,7 +26,9 @@ function fetchMenuFailure(restaurantId) {
   }
 }
 
-const dailyMenuBaseUrl = 'https://cors.io/?https://www.sodexo.fi/ruokalistat/output/daily_json';
+//const corsProxyUrl = 'https://cors.io/?';
+const corsProxyUrl = 'https://secure-island-57076.herokuapp.com/';
+const dailyMenuBaseUrl = `${corsProxyUrl}https://www.sodexo.fi/ruokalistat/output/daily_json`;
 
 function dailyMenuUrl(restaurantId, date = new Date(), language = 'fi') {
   const year = date.getFullYear();
