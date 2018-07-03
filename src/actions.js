@@ -1,8 +1,14 @@
 import fetch from 'isomorphic-fetch';
 
+import { getTodaysMenu } from './antellMenuParser';
+
 export const FETCH_MENU_REQUEST = 'FETCH_MENU_REQUEST';
 export const FETCH_MENU_SUCCESS = 'FETCH_MENU_SUCCESS';
 export const FETCH_MENU_FAILURE = 'FETCH_MENU_FAILURE';
+
+export const FETCH_ANTELL_MENU_REQUEST = 'FETCH_ANTELL_MENU_REQUEST';
+export const FETCH_ANTELL_MENU_SUCCESS = 'FETCH_ANTELL_MENU_SUCCESS';
+export const FETCH_ANTELL_MENU_FAILURE = 'FETCH_ANTELL_MENU_FAILURE';
 
 function fetchMenuRequest(restaurantId, date) {
   return {
@@ -27,9 +33,31 @@ function fetchMenuFailure(restaurantId) {
   }
 }
 
+function fetchAntellMenuRequest(payload) {
+  return {
+    type: FETCH_ANTELL_MENU_REQUEST,
+    payload,
+  };
+}
+
+function fetchAntellMenuSuccess(payload) {
+  return {
+    type: FETCH_ANTELL_MENU_SUCCESS,
+    payload,
+  };
+}
+
+function fetchAntellMenuFailure(payload) {
+  return {
+    type: FETCH_ANTELL_MENU_FAILURE,
+    payload,
+  }
+}
+
 //const corsProxyUrl = 'https://cors.io/?';
-const corsProxyUrl = 'https://secure-island-57076.herokuapp.com/';
+const corsProxyUrl = 'https://my-cors-app.herokuapp.com/';
 const dailyMenuBaseUrl = `${corsProxyUrl}https://www.sodexo.fi/ruokalistat/output/daily_json`;
+const antellMenuBaseUrl = `${corsProxyUrl}https://www.antell.fi/lounaslistat/lounaslista.html`;
 
 function dailyMenuUrl(restaurantId, date = new Date(), language = 'fi') {
   const year = date.getFullYear();
@@ -61,5 +89,19 @@ export function fetchMenuIfNeeded(restaurantId, date) {
     if (shouldFetchMenu(getState(), restaurantId)) {
       return dispatch(fetchMenu(restaurantId, date));
     }
+  };
+}
+
+export function fetchAntellMenu(ownerId) {
+  return (dispatch) => {
+    dispatch(fetchAntellMenuRequest({ ownerId }));
+    return fetch(`${antellMenuBaseUrl}?owner=${ownerId}`)
+      .then(response => response.text())
+      .then(
+        htmlMenu => dispatch(fetchAntellMenuSuccess(
+          { ownerId, ...getTodaysMenu(htmlMenu) }
+        )),
+        error => dispatch(fetchAntellMenuFailure({ ownerId, error }))
+      );
   };
 }

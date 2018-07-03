@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchMenuIfNeeded } from '../actions';
+import { fetchMenuIfNeeded, fetchAntellMenu } from '../actions';
 import './App.css';
 import MenuList from '../components/MenuList';
 
 class App extends Component {
 
   componentDidMount() {
-    const { dispatch, selectedRestaurants, selectedDate } = this.props;
+    const {
+      dispatch,
+      selectedRestaurants,
+      antellRestaurants,
+      selectedDate
+    } = this.props;
     selectedRestaurants.forEach(id => dispatch(fetchMenuIfNeeded(id, selectedDate)));
+    antellRestaurants.forEach(id => dispatch(fetchAntellMenu(id)));
   }
 
   render() {
     return (
       <div className="App">
         <h1>{this.props.selectedDate.toDateString()}</h1>
-        <MenuList>{this.props.menus}</MenuList>
+        <MenuList sodexoMenus={this.props.menus} antellMenus={this.props.antellMenus} />
       </div>
     );
   }
@@ -30,6 +36,7 @@ App.propTypes = {
 function mapStateToProps(state) {
   return {
     selectedRestaurants: state.selectedRestaurants,
+    antellRestaurants: state.selectedAntellRestaurants,
     selectedDate: state.selectedDate,
     menus: state.selectedRestaurants.map(id =>
        state.menusByRestaurantId[id] || {
@@ -37,7 +44,14 @@ function mapStateToProps(state) {
          isError: false,
          data: {}
        }
-     )
+     ),
+    antellMenus: state.selectedAntellRestaurants.map(id =>
+      state.antellMenusByRestaurantId[id] || {
+        isFetching: true,
+        isError: false,
+        data: {},
+      }
+    ),
   };
 }
 

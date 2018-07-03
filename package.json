@@ -1,11 +1,12 @@
 {
   "name": "lunch-app",
   "version": "0.1.0",
-  "homepage": "https://kimmoyr.github.io/lunch-app",
+  "homepage": "https://tuokai.github.io/lunch-app",
   "private": true,
   "dependencies": {
     "gh-pages": "^1.1.0",
     "isomorphic-fetch": "^2.2.1",
+    "moment": "^2.22.2",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
